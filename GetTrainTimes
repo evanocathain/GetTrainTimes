@@ -3,7 +3,7 @@
 import urllib2
 from BeautifulSoup import BeautifulSoup
 import datetime
-from optparse import OptionParser
+import argparse
 
 # VARIABLES
 FROM_STATION = 'WAT'
@@ -26,11 +26,12 @@ def journey_duration(dep, arr):
     return int(dur_mins)
 
 # Get command line arguments
-parser = OptionParser()
-parser.add_option("-d", "--time_offset", dest="TIME_OFFSET",
-                  help="Time offset", type="float", default=20)
-(options, args) = parser.parse_args()
-TIME_OFFSET=options.TIME_OFFSET
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("-d", dest="TIME_OFFSET",
+                    help="The time delta before now at which to search for train times",
+                    default=20)
+args = parser.parse_args()
+TIME_OFFSET = args.TIME_OFFSET
 
 now = datetime.datetime.now()
 then = now - datetime.timedelta(minutes=TIME_OFFSET)
