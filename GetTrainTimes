@@ -5,6 +5,10 @@ from BeautifulSoup import BeautifulSoup
 import datetime
 from optparse import OptionParser
 
+# VARIABLES
+FROM_STATION = 'WAT'
+TO_STATION = 'BSK'
+
 def strip_tags(item):
     return item.text
 
@@ -24,16 +28,17 @@ def journey_duration(dep, arr):
 # Get command line arguments
 parser = OptionParser()
 parser.add_option("-d", "--time_offset", dest="TIME_OFFSET",
-                  help="Time offset", type="float", default=15)
+                  help="Time offset", type="float", default=20)
 (options, args) = parser.parse_args()
 TIME_OFFSET=options.TIME_OFFSET
 
-# VARIABLES
-FROM_STATION = 'WAT'
-TO_STATION = 'BSK'
-
 now = datetime.datetime.now()
 then = now - datetime.timedelta(minutes=TIME_OFFSET)
+
+print("Trains from {} to {} leaving around {}:{}".format(FROM_STATION,
+                                                         TO_STATION,
+                                                         then.hour,
+                                                         then.minute))
 
 string_time = "/{:02.0f}{:02.0f}".format(then.hour, then.minute)
 
@@ -51,6 +56,3 @@ arrivals = [strip_tags(i) for i in soup.findAll("td", { "class" : "arr" })]
 print "Departs   Arrives   Takes"
 for dep, arr in zip(departures, arrivals):
     print "{}     {}     {}  ".format(dep, arr, journey_duration(dep, arr))
-
-# Check for delays
-#lates = soup.findAll("td", { "class" : "journey-status journey-status-on-late" })
