@@ -24,30 +24,26 @@ def journey_duration(dep, arr):
 # Get command line arguments
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("-d", dest="TIME_OFFSET",
-                    help="The time delta before now at which to search for train times",
-                    default=20)
+                    help="The time delta at which to search for train times",
+                    default=-20, type=int)
 parser.add_argument("-t", "--to", dest="TO_STATION", 
                     help="To station", default="BSK")
 parser.add_argument("-f", "--from", dest="FROM_STATION", default="WAT", 
                     help="From station")
 args = parser.parse_args()
 
-TIME_OFFSET = args.TIME_OFFSET
-FROM_STATION = args.FROM_STATION
-TO_STATION = args.TO_STATION
-
 now = datetime.datetime.now()
-then = now - datetime.timedelta(minutes=TIME_OFFSET)
+then = now + datetime.timedelta(minutes=args.TIME_OFFSET)
 
-print("Trains from {} to {} leaving around {}:{}".format(FROM_STATION,
-                                                         TO_STATION,
+print("Trains from {} to {} leaving around {}:{}".format(args.FROM_STATION,
+                                                         args.TO_STATION,
                                                          then.hour,
                                                          then.minute))
 
 string_time = "/{:02.0f}{:02.0f}".format(then.hour, then.minute)
 
 URL = ('http://ojp.nationalrail.co.uk/service/timesandfares/'+
-       '{}/{}/today/'.format(FROM_STATION, TO_STATION) +
+       '{}/{}/today/'.format(args.FROM_STATION, args.TO_STATION) +
        '{}/dep#outwardJump'.format(string_time)
         )
 
