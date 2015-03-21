@@ -26,16 +26,16 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("-d", dest="TIME_OFFSET",
                     help="The time delta at which to search for train times",
                     default=-20, type=int)
-parser.add_argument("-t", "--to", dest="TO_STATION", 
+parser.add_argument("-t", "--to", dest="TO_STATION",
                     help="To station", default="BSK")
-parser.add_argument("-f", "--from", dest="FROM_STATION", default="WAT", 
+parser.add_argument("-f", "--from", dest="FROM_STATION", default="WAT",
                     help="From station")
 args = parser.parse_args()
 
 now = datetime.datetime.now()
 then = now + datetime.timedelta(minutes=args.TIME_OFFSET)
 
-print("Trains from {} to {} leaving around {}:{}".format(args.FROM_STATION,
+print("Trains from {} to {} leaving after {:02d}:{:02d}".format(args.FROM_STATION,
                                                          args.TO_STATION,
                                                          then.hour,
                                                          then.minute))
@@ -55,4 +55,4 @@ arrivals = [strip_tags(i) for i in soup.findAll("td", { "class" : "arr" })]
 # Print the results
 print "Departs   Arrives   Takes"
 for dep, arr in zip(departures, arrivals):
-    print "{}     {}     {}  ".format(dep, arr, journey_duration(dep, arr))
+    print "{}     {}     {}".format(dep, arr, journey_duration(dep, arr))
