@@ -97,21 +97,26 @@ def print_departure_and_arrivals_table(args, departures, arrivals):
     for dep, arr in zip(departures, arrivals):
         print("{}     {}     {}".format(dep, arr, journey_duration(dep, arr)))
 
-# Get command line arguments
-parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("-d", dest="TIME_OFFSET",
-                    help="The time delta at which to search for train times",
-                    default=-20, type=int)
-parser.add_argument("-t", "--to", dest="TO_STATION",
-                    help="To station", default="BSK")
-parser.add_argument("-f", "--from", dest="FROM_STATION", default="WAT",
-                    help="From station")
-parser.add_argument("-g", "--get", dest="GetStationName", default=None,
-                    help="Get the 3 letter station name")
-args = parser.parse_args()
 
-if args.GetStationName:
-    get_station_name(args.GetStationName)
-else:
-    d, a = get_departures_and_arrivals(args)
-    print_departure_and_arrivals_table(args, d, a)
+def main():
+    # Get command line arguments
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("-d", dest="TIME_OFFSET",
+                        help="The time delta at which to search for times",
+                        default=-20, type=int)
+    parser.add_argument("-t", "--to", dest="TO_STATION",
+                        help="To station", default="BSK")
+    parser.add_argument("-f", "--from", dest="FROM_STATION", default="WAT",
+                        help="From station")
+    parser.add_argument("-g", "--get", dest="GetStationName", default=None,
+                        help="Get the 3 letter station name")
+    args = parser.parse_args()
+
+    if args.GetStationName:
+        get_station_name(args.GetStationName)
+    else:
+        d, a = get_departures_and_arrivals(args)
+        print_departure_and_arrivals_table(args, d, a)
+
+if __name__ == "__main__":
+    main()

@@ -1,12 +1,12 @@
 # GetTrainTimes
 
-This is a CLI to scrape the national rail website to quickly get journey
+This is a CLI to scrape the national rail website and quickly get journey
 times. It is intended more as an experiment to learn about web scraping
 rather than a serious project.
 
 ## Usage
 
-A typical use case may be to look up trains from Basinstoke to Waterloo in
+A typical use case may be to look up trains from Basingstoke to Waterloo in
 an hour. To do this we simply call:
 
     $ GetTrainTimes -f BSK -t WAT -d 60
@@ -22,10 +22,11 @@ This willl produce a table:
     10:43     11:34     51
 
 Nice and simple. For the input station names, you can use any format and an
-attempt will be made. However, it is generally best to the three letter station
-code defined by national rail since there could be more than one station with a
-similar name. To aid with this we provide a helper function to look up matched.
-For example, if you wanted to know the station code for waterloo:
+attempt will be made. However, it is generally best to use the three letter
+station code defined by national rail, since there could be more than one
+station with a similar name. To aid with this we provide a helper function to
+look up matched.  For example, if you wanted to know the station code for
+waterloo:
 
     $ GetTrainTimes -g Waterloo
 
@@ -47,5 +48,12 @@ and placing the file `station_codes.csv` in this directory.
 The only non-standard library module that is required for normal operation is
 [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/). 
 
+## Installation
+
+### From source
+
+Clone the repo and
+
+    $ sudo python setup.py install
 
 
