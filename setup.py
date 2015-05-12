@@ -1,6 +1,7 @@
 from setuptools import setup
 
 setup(name='GetTrainTimes',
+      packages=[''],
       version='1.0',
       description="CLI to scrape the National Rail website",
       author="Greg Ashton",
