@@ -6,6 +6,7 @@ from BeautifulSoup import BeautifulSoup
 import datetime
 import argparse
 import os
+from termcolor import colored
 
 
 def strip_tags(item):
@@ -91,11 +92,15 @@ def get_departures_and_arrivals(args):
 
 
 def print_departure_and_arrivals_table(args, departures, arrivals):
+    print("Using time-delta {}".format(args.TIME_OFFSET))
     print("Trains from {} to {} leaving after {:02d}:{:02d}".format(
-          args.FROM_STATION, args.TO_STATION, args.then.hour, args.then.minute))
-    print("Departs   Arrives   Takes")
+          colored(args.FROM_STATION, "red"),
+          colored(args.TO_STATION, "red"),
+          args.then.hour, args.then.minute))
+    print(colored("Departs   Arrives   Takes", "green"))
     for dep, arr in zip(departures, arrivals):
-        print("{}     {}     {}".format(dep, arr, journey_duration(dep, arr)))
+        line = "{}     {}     {}".format(dep, arr, journey_duration(dep, arr))
+        print(colored(line, "blue"))
 
 
 def main():
