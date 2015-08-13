@@ -25,8 +25,19 @@ def journey_duration(dep, arr):
     dep_dt = stringtime_to_datetime(dep)
     arr_dt = stringtime_to_datetime(arr)
     dur_secs = (arr_dt - dep_dt).total_seconds()
+    # Check if the arrival time is on the next day
+    if dur_secs < 0:
+        arr_dt = arr_dt + datetime.timedelta(days=1)
+        dur_secs = (arr_dt - dep_dt).total_seconds()
     dur_mins = dur_secs / 60.0
-    return int(dur_mins)
+
+    # Pretty print
+    if dur_mins > 60:
+        mins = dur_mins % 60
+        hrs = (dur_mins - mins) / 60
+        return "{} hrs {} mins".format(int(hrs), int(mins))
+    else:
+        return "{} mins".format(int(dur_mins))
 
 
 def normalise_string(string):
