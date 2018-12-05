@@ -88,7 +88,7 @@ def get_departures_and_arrivals(args):
     now = datetime.datetime.now()
     args.then = now + datetime.timedelta(minutes=args.TIME_OFFSET)
 
-    string_time = "/{:02.0f}{:02.0f}".format(args.then.hour, args.then.minute)
+    string_time = "{:02.0f}{:02.0f}".format(args.then.hour, args.then.minute)
 
     URL = ('http://ojp.nationalrail.co.uk/service/timesandfares/' +
            '{}/{}/today/'.format(args.FROM_STATION, args.TO_STATION) +
@@ -121,8 +121,8 @@ def main():
                         help="The time delta at which to search for times",
                         default=-20, type=int)
     parser.add_argument("-t", "--to", dest="TO_STATION",
-                        help="To station", default="BSK")
-    parser.add_argument("-f", "--from", dest="FROM_STATION", default="WAT",
+                        help="To station", default="MAN")
+    parser.add_argument("-f", "--from", dest="FROM_STATION", default="EUS",
                         help="From station")
     parser.add_argument("-g", "--get", dest="GetStationName", default=None,
                         help="Get the 3 letter station name")
